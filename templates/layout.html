@@ -1,15 +1,24 @@
 <!doctype html>
 <title>Window Title</title>
+<link rel="stylesheet" type="text/css" href="static/main.css">
 
-<!-- Javascript Setup -->
+<!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
+<script src="static/map.js"></script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_KEY }}&callback=initMap">
+</script>
 
 <div class="page">
-  <h1>Page Title</h1>
+  <h1>Get Me Away from Trump plz</h1>
+  <div class="location_selector">
+  </div>
+  <div id="map">
+  </div>
   <div class="body">
-  {{ body|safe }}
+    {{ body|safe }}
   </div>
 </div>
