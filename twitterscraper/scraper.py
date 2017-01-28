@@ -10,7 +10,7 @@ import requests
 from requests_oauthlib import OAuth1
 
 payload = {'screen_name': 'potus', 'count': '30', 'exclude_replies': 'true'}
-auth = OAuth1(TWITTER_KEYS['consumer_key'], 'BOGAKvC9vVvHjJXGIWkLJqpPlZ3mzCvS5bT0HuBUdRaNvcMPZ6', '90660166-D62ACDdJyz669gs9P70zuA3aG0AmuCBOE556UYRTG', 'Zzmjxpw3GcF7ViHdebW9WxYpUH8CR15G50inAkSGjDv4J')
+auth = OAuth1(TWITTER_KEYS['consumer_key'], TWITTER_KEYS['consumer_secret'], TWITTER_KEYS['access_token'], TWITTER_KEYS['access_secret'])
 r = requests.get('https://api.twitter.com/1.1/statuses/user_timeline.json', params=payload, auth=auth)
 
 tweets_json = r.json()
