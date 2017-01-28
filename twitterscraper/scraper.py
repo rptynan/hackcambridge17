@@ -1,2 +1,6 @@
 #!/usr/bin/env python3
-from api_keys import TWITTER_KEYS
+import sys, os
+sys.path.append(os.path.abspath('..'))
+from hackcambridge17.api_keys import TWITTER_KEYS
+
+print(TWITTER_KEYS)
