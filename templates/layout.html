@@ -1,6 +1,9 @@
 <!doctype html>
+<html>
+<head>
 <title>Window Title</title>
 <link rel="stylesheet" type="text/css" href="static/main.css">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Old+Standard+TT:400,700,400italic' rel='stylesheet' type='text/css'>
 
 <!-- Javascripts -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -11,14 +14,13 @@
 <script async defer
   src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_KEY }}&callback=initMap">
 </script>
+</head>
 
+<body>
 <div class="page">
-  <h1>Get Me Away from Trump plz</h1>
-  <div class="location_selector">
-  </div>
-  <div id="map">
-  </div>
-  <div class="body">
-    {{ body|safe }}
-  </div>
+  <h1 class="header">Get Me Away from Trump</h1>
+    <div id="map">
+    </div>
 </div>
+</body>
+</html>
