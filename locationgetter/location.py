@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-from api_keys import MICROSOFT_KEY
+import sys, os
+sys.path.append(os.path.abspath('..'))
+from hackcambridge17.api_keys import MICROSOFT_KEY
 
 ########### Python 3.2 #############
 import requests

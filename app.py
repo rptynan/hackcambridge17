@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template
+from api_keys import GOOGLE_KEY
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return render_template('layout.html')
+    return render_template('layout.html', GOOGLE_KEY=GOOGLE_KEY)
 
 
 @app.route('/buttonjstest')
@@ -42,4 +43,5 @@ def buttonjstest_getstring():
 
 
 if __name__ == "__main__":
+    app.run(debug=True)
     app.run()
