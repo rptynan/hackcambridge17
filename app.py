@@ -6,40 +6,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('layout.html', GOOGLE_KEY=GOOGLE_KEY)
-
-
-@app.route('/buttonjstest')
-def buttonjstest():
+    trumpLocation = {'lat': 38.9, 'lng': -77.0}
     return render_template(
         'layout.html',
-        body="""<script type=text/javascript>
-            $(function() {
-                $('a#fetchtext').bind(
-                    'click',
-                    function() {
-                                console.log($SCRIPT_ROOT + 'hii');
-                        $.get(
-                            $SCRIPT_ROOT + '/buttonjstest_getstring',
-                            {},
-                            function(data) {
-                                console.log(data);
-                                $('#result').text(data);
-                            }
-                        );
-                        return false;
-                    }
-                );
-            });
-            </script>
-            <a href=# id=fetchtext>fetch some text</a>
-            <span id=result>?</span>"""
+        GOOGLE_KEY=GOOGLE_KEY,
+        body="""<button onclick="setOurLocation({location})">
+            Click
+        </button>""".format(location=trumpLocation)
     )
-
-
-@app.route('/buttonjstest_getstring')
-def buttonjstest_getstring():
-    return 'fetched this through javascript'
 
 
 if __name__ == "__main__":
