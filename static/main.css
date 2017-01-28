@@ -1,4 +1,55 @@
-#map {
-    height: 600px;
-    width: 100%;
+/*
+ * GOP grey: #464646
+ * GOP lightgrey: #222
+ * GOP otherlightgrey: #b2b9bd
+ * Trump navy: #2b325f
+ * Trump red: #bc0000
+ * Trump footer: cadetblue
+ * Trump white: #fff
+*/
+:root {
+    --main-bg-color: #2b325f;
 }
+
+body {
+    background-color: var(--main-bg-color);
+}
+
+.header {
+    color: #fff;
+    font-family: 'Montserrat',serif!important;
+    margin: 15px;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+div.page, #map {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+
+/* Some research */
+/* #introptext p { */
+/*     font-family: "Montserrat",serif!important; */
+/*     color: #464646; */
+/*     font-size: 14px; */
+/*     line-height: 26px; */
+/*     margin: 0 0 15px; */
+/* } */
+
+/* #top_navigation ul li a { */
+/*     color: #fff; */
+/*     font-family: 'Montserrat',serif!important; */
+/* } */
+/* #top_navigation ul li a { */
+/*     color: #c2c2c2; */
+/*     display: inline-block; */
+/*     padding: 5px 17px; */
+/*     font-size: 13px; */
+/*     text-transform: uppercase; */
+/* } */

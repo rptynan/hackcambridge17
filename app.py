@@ -10,9 +10,9 @@ def index():
     return render_template(
         'layout.html',
         GOOGLE_KEY=GOOGLE_KEY,
-        body="""<button onclick="setOurLocation({location})">
-            Click
-        </button>""".format(location=trumpLocation)
+        # body="""<button onclick="setOurLocation({location})">
+        #     Click
+        # </button>""".format(location=trumpLocation)
     )
 
 
