@@ -93,9 +93,3 @@ def print_tweets():
         print(tweets_json[i]["user"]["id"])
         print(tweets_json[i]["created_at"])
         print('\n')
-
-
-## Test ##
-init()
-
-print(get_location_from_date("Wed Jan 25 00:47:05 +0000 2017"))
