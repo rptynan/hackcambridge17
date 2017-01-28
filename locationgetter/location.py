@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-import sys, os
+import sys, os, requests
 sys.path.append(os.path.abspath('..'))
 from hackcambridge17.api_keys import MICROSOFT_KEY
 
-########### Python 3.2 #############
-import requests
+
 
 headers = {
     # Request headers
@@ -23,4 +22,4 @@ print(r.text)
 
 # check data includes location
 
-####################################
+
