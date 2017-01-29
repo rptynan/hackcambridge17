@@ -3,8 +3,8 @@ sys.path.append(os.path.abspath('..'))
 from hackcambridge17.api_keys import SKYSCANNER_KEY
 from geopy.distance import great_circle
 
-FROM_AIRPORTS = 2
-TO_AIRPORTS = 50
+FROM_AIRPORTS = 3
+TO_AIRPORTS = 20
 
 def parse_coords(json_coords):
     split = json_coords.split(',')
@@ -29,11 +29,14 @@ def find_airports(trump_loc, total_return=TO_AIRPORTS, far=True):
     num_countries = 0
     num_cities = 0
     num_aiports = 0
+    print('start')
     for continent in range(num_continents):
         num_countries = len(airports_json["Continents"][continent]["Countries"])
         for country in range(num_countries):
             num_cities = len(airports_json["Continents"][continent]["Countries"][country]["Cities"])
             for city in range(num_cities):
+                if airports_json["Continents"][continent]["Countries"][country]["Cities"][city]["SingleAirportCity"]:
+                    continue;
                 num_aiports = len(airports_json["Continents"][continent]["Countries"][country]["Cities"][city]["Airports"])
                 for airport in range(num_aiports):
                     # Get distance from Trump for the airport
@@ -46,6 +49,7 @@ def find_airports(trump_loc, total_return=TO_AIRPORTS, far=True):
 
                     airport_dict.update({distance : airports_json["Continents"][continent]["Countries"][country]["Cities"][city]["Airports"][airport]})
 
+    print('end')
     # Sort flights by key (distance) in ascending order
     ordered_flights = collections.OrderedDict(sorted(airport_dict.items(), reverse=not far))
     # Return number of results specified by 'total_return'
