@@ -138,7 +138,7 @@ function initMap() {
         // ));
         $.getJSON(
             'https://www.googleapis.com/geolocation/v1/geolocate?key=' + $GOOGLE_KEY,
-            data => { data['location'] ? setOurLocation(data['location']) : }
+            data => { data['location'] ? setOurLocation(data['location']) : 0; }
         );
     }
 
@@ -157,5 +157,6 @@ function initMap() {
     // Get the Donald's position
     $.getJSON($SCRIPT_ROOT + '/donaldslocation', data => setTrumpLocation(data))
 
+    setOurLocation({lat: 52, lng: 0});
     // Get the flights will be set when Donald's or User's location comes back
 }
