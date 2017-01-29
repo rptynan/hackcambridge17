@@ -22,7 +22,7 @@ body {
 }
 
 
-.header img {
+.header object {
   float: left;
   height: 7em;
   margin: 1em;
@@ -39,6 +39,10 @@ body {
   margin-right: 0em;
   margin-top: 0.5em;
   
+}
+
+.logo-fill {
+    fill: #fff;
 }
 
 .header h2 {
