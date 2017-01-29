@@ -18,8 +18,32 @@ body {
 .header {
     color: #fff;
     font-family: 'Montserrat',serif!important;
-    margin: 15px;
+    margin: 20px;
 }
+
+
+.header img {
+  float: left;
+  width: 201px;
+  height: 132px;
+  margin: 20px;
+}
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+  font-size: 72px;
+  
+}
+
+.header h2 {
+  position: relative;
+  left: 10px;
+  font-size: 24px;
+  font-style: normal;
+}
+
 
 /* To make map full window */
 html, body {
