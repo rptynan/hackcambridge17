@@ -110,13 +110,12 @@ function updateFlights(flights) {
         }));
         Flights[i].infowindow = new google.maps.InfoWindow({
             content: '<div class="infowindow-content">'+
-                '<h1 class="info-header">You</h1>'+
+                '<h1 class="info-header">' + flights[i]['Name'] + '</h1>'+
                 '<div class="info-wrapper">'+
-                '<p><b>You</b>, an upper-middle-class liberal, afraid for '+
-                'your life. First Brexit, now this? And the righter-wingers '+
-                'had a summit in Germany? That\'s it, I\'m off to Australia, '+
-                'at least they have a liberal government.'+
-                '</div>'+
+                '<p><b>'+ flights[i]['Id'] + '</b></p>'+
+                '<p>That\'s <b>'+ flights[i]['Distance'] + ' miles</b> away from Trump!</p>'+
+                '<p>But it\'ll cost you <b>£'+ flights[i]['price'] + '</b></p>'+
+                '</p></div>'+
                 '</div>',
             maxWidth: INFO_WINDOW_WIDTH,
         });
@@ -138,7 +137,7 @@ function initMap() {
 
     // Make map
     Map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
+        zoom: 2,
         center: Us.location,
         mapTypeControl: false,
         streetViewControl: false,

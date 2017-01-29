@@ -34,8 +34,9 @@ def donaldslocation(dojson=True):
 @app.route('/flightlocations')
 def flightlocations():
     payload = json.loads(request.args['json'])
-    our_loc = payload['our_location']
-    trump_loc = payload['trump_location']
+    our_loc = (payload['our_location']['lat'], payload['our_location']['lng'])
+    trump_loc = \
+        (payload['trump_location']['lat'], payload['trump_location']['lng'])
 
     flights_list = find_flights(trump_loc, our_loc, 5)
     flights_dict_list = []
@@ -46,7 +47,9 @@ def flightlocations():
         item_dict['lng'], item_dict['lat'] = item_dict['Location'].split(', ')
         item_dict['lng'] = float(item_dict['lng'])
         item_dict['lat'] = float(item_dict['lat'])
+        item_dict['price'] = round(item_dict['Quotes'][0]['MinPrice'])
         flights_dict_list.append(item_dict)
+        print(item_dict)
 
     return json.dumps(flights_dict_list)
 
