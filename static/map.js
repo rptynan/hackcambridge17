@@ -96,6 +96,23 @@ function updateFlights(flights) {
             title: flights[i]['Name'],
             map: Map,
         }));
+        Flights[i].infowindow = new google.maps.InfoWindow({
+            content: '<div class="infowindow-content">'+
+                '<h1 class="info-header">You</h1>'+
+                '<div class="info-wrapper">'+
+                '<p><b>You</b>, an upper-middle-class liberal, afraid for '+
+                'your life. First Brexit, now this? And the righter-wingers '+
+                'had a summit in Germany? That\'s it, I\'m off to Australia, '+
+                'at least they have a liberal government.'+
+                '</div>'+
+                '</div>',
+            maxWidth: INFO_WINDOW_WIDTH,
+        });
+        Flights[i].addListener(
+            'click',
+            () => Flights[i].infowindow.open(Map, Flights[i])
+        );
+    
     }
 }
 
