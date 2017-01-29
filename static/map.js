@@ -27,7 +27,7 @@ function setTrumpLocation(location) {
                 'src="static/img/trump_profile.jpg" />'+
                 '</div>'+
                 '<div class="info-left">'+
-                '<p><b>The Donald</b>, also referred to as <b>TrumpyWumpy</b>,'+
+                '<p><b>The Donald</b>, also referred to as <b>TrumpyWumpy</b>, '+
                 '<b>Trumplestiltskin</b>, <b>El Presidente</b>, is a large '+
                 'sandstone rock formation and a man you wouldn\'t want to '+
                 'meet in a dark alley after a night out (or ever really).'+
@@ -110,11 +110,14 @@ function updateFlights(flights) {
         }));
         Flights[i].infowindow = new google.maps.InfoWindow({
             content: '<div class="infowindow-content">'+
-                '<h1 class="info-header">' + flights[i]['Name'] + '</h1>'+
+                '<h1 class="info-header">' + flights[i]['Name'] +
+                ', ' + flights[i]['CountryId'] + '</h1>'+
                 '<div class="info-wrapper">'+
-                '<p><b>'+ flights[i]['Id'] + '</b></p>'+
-                '<p>That\'s <b>'+ flights[i]['Distance'] + ' miles</b> away from Trump!</p>'+
+                // '<p><b>'+ flights[i]['Id'] + '</b></p>'+
+                '<p>That\'s <b>'+ flights[i]['Distance'] + ' km</b> away from Trump!</p>'+
                 '<p>But it\'ll cost you <b>£'+ flights[i]['price'] + '</b></p>'+
+                '<p>More importantly it\'ll cost the planet about <b>'+
+                flights[i]['co2e'] + 'kg CO<sub>2</sub>e</b> emissions</p>'+
                 '</p></div>'+
                 '</div>',
             maxWidth: INFO_WINDOW_WIDTH,

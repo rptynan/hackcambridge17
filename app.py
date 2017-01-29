@@ -43,11 +43,12 @@ def flightlocations():
 
     for item in flights_list:
         item_dict = item[1]
-        item_dict['Distance'] = item[0]
+        item_dict['Distance'] = round(1.60934 * item[0])  # km
         item_dict['lng'], item_dict['lat'] = item_dict['Location'].split(', ')
         item_dict['lng'] = float(item_dict['lng'])
         item_dict['lat'] = float(item_dict['lat'])
         item_dict['price'] = round(item_dict['Quotes'][0]['MinPrice'])
+        item_dict['co2e'] = round(0.101 * item_dict['Distance'])  # kg
         flights_dict_list.append(item_dict)
         print(item_dict)
 

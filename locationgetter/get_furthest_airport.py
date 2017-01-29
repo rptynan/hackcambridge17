@@ -19,7 +19,7 @@ airports_json = all_airports.json()
 # dates
 leave_date = datetime.date.today() + datetime.timedelta(days = 2)
 
-def find_airports(trump_loc, total_return=100):
+def find_airports(trump_loc, total_return=100, far=True):
     airport_dict = {}
 
     num_continents = len(airports_json["Continents"])
@@ -44,15 +44,17 @@ def find_airports(trump_loc, total_return=100):
                     airport_dict.update({distance : airports_json["Continents"][continent]["Countries"][country]["Cities"][city]["Airports"][airport]})
 
     # Sort flights by key (distance) in ascending order
-    ordered_flights = collections.OrderedDict(sorted(airport_dict.items()))
+    ordered_flights = collections.OrderedDict(sorted(airport_dict.items(), reverse=not far))
     # Return number of results specified by 'total_return'
     return list(ordered_flights.items())[-total_return:]
 
 def find_flights(trump_loc, my_loc, total_return=5):
     poss_airports = find_airports(trump_loc)
+    origin_airport = 'LHR' #find_airports(my_loc, total_return=1, far=False)[0][1]['Id']
+    # print(origin_airport)
     flights = []
     for airport in poss_airports:
-        url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}'.format(country = 'GB', currency = 'GBP', locale = 'gb-EN', originPlace = 'LHR', destinationPlace = airport[1]["Id"], outboundPartialDate = leave_date, inboundPartialDate = '', apiKey = SKYSCANNER_KEY )
+        url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}'.format(country = 'GB', currency = 'GBP', locale = 'gb-EN', originPlace = origin_airport, destinationPlace = airport[1]["Id"], outboundPartialDate = leave_date, inboundPartialDate = '', apiKey = SKYSCANNER_KEY )
         req = requests.get(url)
         quote_json = req.json()
         if quote_json["Quotes"]:
@@ -60,5 +62,4 @@ def find_flights(trump_loc, my_loc, total_return=5):
             flights.append(airport)
     return flights
 
-find_flights((38.9072, -77.0369), (51.5074, -0.1278), 5)
-        
+# find_flights((38.9072, -77.0369), (51.5074, -0.1278), 5)
