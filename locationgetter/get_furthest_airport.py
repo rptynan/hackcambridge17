@@ -4,7 +4,7 @@ from hackcambridge17.api_keys import SKYSCANNER_KEY
 from geopy.distance import great_circle
 
 FROM_AIRPORTS = 2
-TO_AIRPORTS = 50
+TO_AIRPORTS = 40
 
 def parse_coords(json_coords):
     split = json_coords.split(',')
@@ -54,10 +54,10 @@ def find_airports(trump_loc, total_return=TO_AIRPORTS, far=True):
 def find_flights(trump_loc, my_loc, total_return=5):
     poss_airports = find_airports(trump_loc)
     origin_airports = [x[1]['Id'] for x in find_airports(my_loc, total_return=FROM_AIRPORTS, far=False)]
-    print(origin_airports)
+    # print(origin_airports)
     flights = []
     for fromairport in origin_airports:
-        print(fromairport)
+        # print(fromairport)
         for airport in poss_airports:
             url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}'.format(country = 'GB', currency = 'GBP', locale = 'gb-EN', originPlace = fromairport, destinationPlace = airport[1]["Id"], outboundPartialDate = leave_date, inboundPartialDate = '', apiKey = SKYSCANNER_KEY )
             req = requests.get(url)
