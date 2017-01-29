@@ -48,5 +48,3 @@ def find_airports(trump_loc, total_return=5):
     ordered_flights = collections.OrderedDict(sorted(airport_dict.items()))
     # Return number of results specified by 'total_return'
     return list(ordered_flights.items())[-total_return:]
-
-print(find_airports(trump_location, 10))
