@@ -57,6 +57,16 @@ div.page, #map {
     margin: 0;
 }
 
+/* Info window stuff */
+.info-wrapper {
+}
+.info-left {
+    float: left;
+}
+.info-right {
+    float: right;
+}
+
 
 /* Some research */
 /* #introptext p { */

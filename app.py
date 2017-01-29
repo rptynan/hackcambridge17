@@ -35,22 +35,22 @@ def airportlocations():
     trump_loc = donaldslocation(dojson=False)
     lng = trump_loc['lng']
     lat = trump_loc['lat']
-    
+
     airport_list = find_airports((lat, lng), 5)
     airport_dict_list = []
 
     for item in airport_list:
         item_dict = item[1]
         item_dict['Distance'] = item[0]
+        item_dict['lng'], item_dict['lat'] = item_dict['Location'].split(', ')
+        item_dict['lng'] = float(item_dict['lng'])
+        item_dict['lat'] = float(item_dict['lat'])
         airport_dict_list.append(item_dict)
 
     return json.dumps(airport_dict_list)
-    
-    
+
 
 if __name__ == "__main__":
     threading.Thread(target=init_twitter_scraper).start()
     app.run(debug=True)
     app.run()
-
-airportlocations()
