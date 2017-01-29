@@ -3,6 +3,7 @@ from flask import Flask, render_template
 from api_keys import GOOGLE_KEY
 from twitterscraper.scraper import init_twitter_scraper, get_location
 from locationgetter.get_furthest_airport import find_airports
+from locationgetter.get_furthest_airport import find_flights
 import threading
 import json
 
@@ -36,7 +37,9 @@ def airportlocations():
     lng = trump_loc['lng']
     lat = trump_loc['lat']
 
-    airport_list = find_airports((lat, lng), 5)
+    #airport_list = find_airports((lat, lng), 5)
+    airport_list = find_flights((lat, lng), (51.471523, -0.453357))
+
     airport_dict_list = []
 
     for item in airport_list:
