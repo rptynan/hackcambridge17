@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template
 from api_keys import GOOGLE_KEY
+from flask import Flask, render_template, request
 from twitterscraper.scraper import init_twitter_scraper, get_location
-from locationgetter.get_furthest_airport import find_airports
 from locationgetter.get_furthest_airport import find_flights
-import threading
 import json
+import threading
 
 app = Flask(__name__)
 
@@ -23,7 +22,7 @@ def donaldslocation(dojson=True):
     bounds = get_location()['bounding_box']['coordinates'][0]
     rlat = 0
     rlng = 0
-    for lng, lat in bounds: # Twitter's lng/lat order
+    for lng, lat in bounds:  # Twitter's lng/lat order
         rlat += lat
         rlng += lng
     rlat /= len(bounds)
@@ -31,26 +30,25 @@ def donaldslocation(dojson=True):
     res = {'lat': rlat, 'lng': rlng}
     return json.dumps(res) if dojson else res
 
-@app.route('/airportlocations')
-def airportlocations():
-    trump_loc = donaldslocation(dojson=False)
-    lng = trump_loc['lng']
-    lat = trump_loc['lat']
 
-    #airport_list = find_airports((lat, lng), 5)
-    airport_list = find_flights((lat, lng), (51.471523, -0.453357))
+@app.route('/flightlocations')
+def flightlocations():
+    payload = json.loads(request.args['json'])
+    our_loc = payload['our_location']
+    trump_loc = payload['trump_location']
 
-    airport_dict_list = []
+    flights_list = find_flights(trump_loc, our_loc, 5)
+    flights_dict_list = []
 
-    for item in airport_list:
+    for item in flights_list:
         item_dict = item[1]
         item_dict['Distance'] = item[0]
         item_dict['lng'], item_dict['lat'] = item_dict['Location'].split(', ')
         item_dict['lng'] = float(item_dict['lng'])
         item_dict['lat'] = float(item_dict['lat'])
-        airport_dict_list.append(item_dict)
+        flights_dict_list.append(item_dict)
 
-    return json.dumps(airport_dict_list)
+    return json.dumps(flights_dict_list)
 
 
 if __name__ == "__main__":

@@ -46,6 +46,8 @@ function setTrumpLocation(location) {
     else {
         Trump.marker.setPosition(location);
     }
+    // Update flights now that we've moved
+    fetchUpdatedFlights();
 }
 
 
@@ -77,9 +79,19 @@ function setOurLocation(location) {
     else {
         Us.marker.setPosition(location);
     }
-    $.getJSON($SCRIPT_ROOT + '/airportlocations', data => updateFlights(data))
+    // Update flights now that we've moved
+    fetchUpdatedFlights();
 }
 
+function fetchUpdatedFlights() {
+    $.getJSON(
+        $SCRIPT_ROOT + '/flightlocations',
+        {'json': JSON.stringify(
+            {'our_location': Us.location, 'trump_location': Trump.location}
+        )},
+        data => updateFlights(data)
+    );
+}
 
 function updateFlights(flights) {
     // Delete old markers
@@ -112,7 +124,6 @@ function updateFlights(flights) {
             'click',
             () => Flights[i].infowindow.open(Map, Flights[i])
         );
-    
     }
 }
 
@@ -140,6 +151,5 @@ function initMap() {
     // Get the Donald's position
     $.getJSON($SCRIPT_ROOT + '/donaldslocation', data => setTrumpLocation(data))
 
-    // Get the flights we so desperately need
-    $.getJSON($SCRIPT_ROOT + '/airportlocations', data => updateFlights(data))
+    // Get the flights will be set when Donald's or User's location comes back
 }
