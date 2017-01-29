@@ -50,7 +50,7 @@ def flightlocations():
         item_dict['price'] = round(item_dict['Quotes'][0]['MinPrice'])
         item_dict['co2e'] = round(0.101 * item_dict['Distance'])  # kg
         flights_dict_list.append(item_dict)
-        print(item_dict)
+        # print(item_dict)
 
     return json.dumps(flights_dict_list)
 

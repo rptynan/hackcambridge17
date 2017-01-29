@@ -3,6 +3,9 @@ sys.path.append(os.path.abspath('..'))
 from hackcambridge17.api_keys import SKYSCANNER_KEY
 from geopy.distance import great_circle
 
+FROM_AIRPORTS = 2
+TO_AIRPORTS = 50
+
 def parse_coords(json_coords):
     split = json_coords.split(',')
     #print(split)
@@ -19,7 +22,7 @@ airports_json = all_airports.json()
 # dates
 leave_date = datetime.date.today() + datetime.timedelta(days = 2)
 
-def find_airports(trump_loc, total_return=100, far=True):
+def find_airports(trump_loc, total_return=TO_AIRPORTS, far=True):
     airport_dict = {}
 
     num_continents = len(airports_json["Continents"])
@@ -50,16 +53,18 @@ def find_airports(trump_loc, total_return=100, far=True):
 
 def find_flights(trump_loc, my_loc, total_return=5):
     poss_airports = find_airports(trump_loc)
-    origin_airport = 'LHR' #find_airports(my_loc, total_return=1, far=False)[0][1]['Id']
-    # print(origin_airport)
+    origin_airports = [x[1]['Id'] for x in find_airports(my_loc, total_return=FROM_AIRPORTS, far=False)]
+    print(origin_airports)
     flights = []
-    for airport in poss_airports:
-        url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}'.format(country = 'GB', currency = 'GBP', locale = 'gb-EN', originPlace = origin_airport, destinationPlace = airport[1]["Id"], outboundPartialDate = leave_date, inboundPartialDate = '', apiKey = SKYSCANNER_KEY )
-        req = requests.get(url)
-        quote_json = req.json()
-        if quote_json["Quotes"]:
-            airport[1].update({"Quotes": quote_json["Quotes"]})
-            flights.append(airport)
+    for fromairport in origin_airports:
+        print(fromairport)
+        for airport in poss_airports:
+            url = 'http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}'.format(country = 'GB', currency = 'GBP', locale = 'gb-EN', originPlace = fromairport, destinationPlace = airport[1]["Id"], outboundPartialDate = leave_date, inboundPartialDate = '', apiKey = SKYSCANNER_KEY )
+            req = requests.get(url)
+            quote_json = req.json()
+            if quote_json["Quotes"]:
+                airport[1].update({"Quotes": quote_json["Quotes"]})
+                flights.append(airport)
     return flights
 
 # find_flights((38.9072, -77.0369), (51.5074, -0.1278), 5)
