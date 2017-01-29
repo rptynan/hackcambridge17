@@ -12,27 +12,21 @@ num_tweets = 50
 POTUS_ID = 822215679726100480
 REALDONALDTRUMP_ID = 25073877
 
-def init():
+def init_twitter_scraper():
+    print("Starting twitter scraping")
     payload = {'screen_name': 'potus', 'count': num_tweets, 'exclude_replies': 'true'}
     auth = OAuth1(TWITTER_KEYS['consumer_key'], TWITTER_KEYS['consumer_secret'], TWITTER_KEYS['access_token'], TWITTER_KEYS['access_secret'])
     r = requests.get('https://api.twitter.com/1.1/statuses/user_timeline.json', params=payload, auth=auth)
     global tweets_json
     tweets_json = r.json()
+    print("Finished twitter scraping!")
 
-def get_recent_location():
+def get_location(date=None):
     i = 0
-    while (i < num_tweets and tweets_json[i]["place"] is None):
-        i = i + 1
-    if(i < num_tweets):
-        return tweets_json[i]["place"]
-    else:
-        return None
+    if (date != None):
+        while (i < num_tweets and is_later(date, tweets_json[i]["created_at"])):
+            i = i + 1
 
-def get_location_from_date(date):
-    i = 0
-    while (i < num_tweets and is_later(date, tweets_json[i]["created_at"])):
-        i = i + 1
-    
     while (i < num_tweets and tweets_json[i]["place"] is None):
         i = i + 1
 
@@ -65,8 +59,8 @@ def date_to_JSON(date):
     my_json["seconds"] = time_array[2]
     my_json["year"] = date_array[5]
     return my_json
-    
-def convert_month(month): 
+
+def convert_month(month):
     return {
         'Jan': 1,
         'Feb': 2,
