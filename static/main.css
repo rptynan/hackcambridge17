@@ -63,10 +63,10 @@ div.page, #map {
 .info-wrapper {
 }
 .info-left {
-    float: left;
 }
 .info-right {
     float: right;
+    margin-left: 1em;
 }
 
 
