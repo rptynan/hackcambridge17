@@ -36,7 +36,7 @@ def airportlocations():
     lng = trump_loc['lng']
     lat = trump_loc['lat']
     
-    airport_list = find_airports((lng, lat), 5)
+    airport_list = find_airports((lat, lng), 5)
     airport_dict_list = []
 
     for item in airport_list:
