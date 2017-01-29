@@ -133,9 +133,13 @@ function updateFlights(flights) {
 function initMap() {
     // Ask for geo permission
     if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => setOurLocation(
-            {lat: position.coords.latitude, lng: position.coords.longitude}
-        ));
+        // navigator.geolocation.getCurrentPosition((position) => setOurLocation(
+        //     {lat: position.coords.latitude, lng: position.coords.longitude}
+        // ));
+        $.getJSON(
+            'https://www.googleapis.com/geolocation/v1/geolocate?key=' + $GOOGLE_KEY,
+            data => { data['location'] ? setOurLocation(data['location']) : }
+        );
     }
 
     // Make map
