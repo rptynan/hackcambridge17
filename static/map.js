@@ -131,16 +131,15 @@ function updateFlights(flights) {
 
 
 function initMap() {
-    // Ask for geo permission
-    if ('geolocation' in navigator) {
-        // navigator.geolocation.getCurrentPosition((position) => setOurLocation(
-        //     {lat: position.coords.latitude, lng: position.coords.longitude}
-        // ));
-        $.getJSON(
-            'https://www.googleapis.com/geolocation/v1/geolocate?key=' + $GOOGLE_KEY,
-            data => { data['location'] ? setOurLocation(data['location']) : 0; }
-        );
-    }
+    $.ajax({
+        url: 'https://www.googleapis.com/geolocation/v1/geolocate?key=' + $GOOGLE_KEY,
+        type: 'post',
+        data: JSON.stringify({'considerIP': 'true'}),
+        contentType: 'application/json',
+        success: data => {
+            data['location'] ? setOurLocation(data['location']) : 0;
+        }
+    });
 
     // Make map
     Map = new google.maps.Map(document.getElementById('map'), {
